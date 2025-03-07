@@ -5,7 +5,7 @@ var currentUser = JSON.parse(localStorage.getItem("currentUser"));
 function logout() {
 localStorage.removeItem("currentUser");
 alert("Logout Successfully!");
-window.location.href="http://127.0.0.1:5500/blog_main.html";
+window.location.href="/blog_main.html";
 }
 
 if (currentUser) {
@@ -28,7 +28,7 @@ var logoutBtn = document.getElementById("logout-btn");
 logoutBtn.addEventListener("click", logout);
 
 } else {
-    window.location.href="http://127.0.0.1:5500/signin.html";
+    window.location.href="/signin.html";
 }
 
 var form = document.getElementById("formLocal");
@@ -53,5 +53,5 @@ status: 'consideration',
 var stringblogs = JSON.stringify(blogDatabase); // convert array to string
 localStorage.setItem("blogDatabase", stringblogs); // save to localStorage
 alert("Add blog successfully!!");
-window.location.href='http://127.0.0.1:5500/blog_main.html';
+window.location.href='/blog_main.html';
 });

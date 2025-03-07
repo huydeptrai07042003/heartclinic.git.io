@@ -1,7 +1,7 @@
 var btnLogIn = document.getElementById('btnLogIn');
 var btnPost = document.getElementById('btnPost');
 btnLogIn.onclick = function(){
-    window.location.href = "http://127.0.0.1:5500/signin.html";
+    window.location.href = "/signin.html";
 };
 
 

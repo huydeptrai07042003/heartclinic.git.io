@@ -22,10 +22,10 @@ if (user.length === 1) {
     localStorage.setItem("currentUser", JSON.stringify(user[0]));
 
     if(user[0]['email'] === '123@gmail.com'){
-    window.location.href = "http://127.0.0.1:5500/blog_main_admin.html";
+    window.location.href = "/blog_main_admin.html";
     }
     else{
-    window.location.href = "http://127.0.0.1:5500/blog_post.html";
+    window.location.href = "/blog_post.html";
     }
 
 } else {
