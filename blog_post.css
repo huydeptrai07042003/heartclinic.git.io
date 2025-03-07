@@ -1,0 +1,66 @@
+:root{
+    --text-color:rgb(28,88,239);
+    --clr-bg-1: #F0F0F0;
+}
+
+*{
+    margin: 0 !important;
+    border: 0 !important;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-image: url(img/bg-blog.jpg);
+}
+
+.btn2{
+    background-color: var(--text-color);
+    padding: 0 35px;
+    border-radius: 30px;
+    height: 50px;
+    align-content: center;
+    color: white !important;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.btn2:hover{
+    background-color: black;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+
+.post{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-color);
+    align-items: center;
+    border-radius: 20px;
+    padding:20px 0 ;
+}
+
+.post >input{
+    width: 70%;
+    margin: 10px !important;
+    padding: 20px !important;
+    border-radius: 20px;
+}
+
+.btn{
+    padding: 5px 40px !important;
+    background-color: var(--clr-bg-1) !important;
+    color: var(--text-color) !important;
+    border-radius: 20px !important;
+    transition: all 0.5s ease !important;
+}
+
+.btn:hover{
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    background-color: black !important;
+    color: var(--clr-bg-1) !important;
+}

@@ -1,0 +1,93 @@
+*{
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+:root{
+    --text-color:rgb(28,88,239);
+    --clr-bg-1: #F0F0F0;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-image: url(img/room-backgroud.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.logo1{
+    font-size: 30px;
+    padding: 0px 10px;
+    color: var(--text-color);
+}
+
+.btn2{
+    background-color: var(--text-color);
+    padding: 0 35px;
+    border-radius: 30px;
+    height: 50px;
+    align-content: center;
+    color: white !important;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.btn2:hover{
+    background-color: black;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+.bed-container{
+    width: 70%;
+    background: linear-gradient(135deg,rgba(28,88,239,0.1),rgba(28,88,239,0.6),rgba(28,88,239,0.1));
+    backdrop-filter: blur(10px) !important;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 50px;
+}
+.bed{
+    border: 1px solid var(--text-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.heart-img{
+    margin-top: 10px;
+    align-self: center;
+    width: 90%;
+    height: 110px;
+}
+.heart-img > i{
+    font-size: 90px;
+}
+
+.bed-function{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    font: 18px;
+    align-self: center;
+    margin-bottom: 5px;
+}
+button{
+background: transparent;
+}
+
+.zoom{
+    scale: 1.2;
+}
+
+#btn-alert:hover i{
+    color: red;
+}
+
+.bed1-func{
+    color:  yellow;
+}

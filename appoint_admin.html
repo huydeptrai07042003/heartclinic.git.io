@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        :root{
+            --text-color:rgb(28,88,239);
+            --clr-bg-1: #F0F0F0;
+        }
+
+        *{
+            box-sizing: border-box;
+            font-family: "Poppins", serif;
+        }
+
+        body{
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            background-image: url(img/bg-blog.jpg);
+            justify-items: center;
+        }
+
+        table,td,tr,th{
+            border: 3px solid;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        th,td{
+            padding: 10px;
+            font-size: 20px;
+        }
+        .Edit,.Delete{
+            margin: 5px;
+        }
+
+
+    .btn2{
+        background-color: var(--text-color);
+        padding: 0 35px;
+        border-radius: 30px;
+        height: 50px;
+        align-content: center;
+        color: white !important;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 20px;
+    }
+
+    .btn2:hover{
+        background-color: black;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    }
+
+
+    </style>
+</head>
+<body>
+    
+    <button class="btn2" id="btnPM"><b>Post Management</b></button>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Number</th>
+            <th>Birth</th>
+            <th>Place</th>
+            <th>Doctor</th>
+            <th>status</th>
+        </tr>
+    </thead>
+    <tbody id="appointmentList">
+        <tr>
+            <td>Huy</td>
+            <td>123@gmail.com</td>
+            <td>0834586662</td>
+            <td>07/04/2003</td>
+            <td>Choose Clinic</td>
+            <td>Dr. Jade Dayal</td>
+            <td><b>CONSIDERING</b></td>
+        </tr>
+        <tr>
+            <td>Hai</td>
+            <td>567@gmail.com</td>
+            <td>0834586662</td>
+            <td>07/04/2003</td>
+            <td>Choose Clinic</td>
+            <td>Dr. Jade Dayal</td>
+            <td><b>APPROVAL</b></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+    <script>
+
+let showAppointments = document.getElementById("appointmentList");
+let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+function displayappointment() {
+showAppointments.innerHTML = "";
+for (let i = 0; i < appointments.length; i++) {
+let appointmentInfo = appointments[i];
+if (appointmentInfo["isDelete"] === false) {
+    let tr = document.createElement("tr");
+    tr.classList.add("appointment");
+    tr.innerHTML = `
+        <tr>
+            <td>${appointmentInfo["name"]}</td>
+            <td>${appointmentInfo["email"]}</td>
+            <td>${appointmentInfo["number"]}</td>
+            <td>${appointmentInfo["birth"]}</td>
+            <td>${appointmentInfo["place"]}</td>
+            <td>${appointmentInfo["doctor"]}</td>
+            <td><b>CONSIDERING</b></td>
+        </tr>
+    `;
+
+    let buttonEdit = document.createElement("button");
+    buttonEdit.textContent = "Edit";
+    buttonEdit.classList.add("Edit");
+    buttonEdit.addEventListener("click", () => editAppointment(i));
+    tr.appendChild(buttonEdit);
+
+    let buttonDelete = document.createElement("button");
+    buttonDelete.textContent = "Delete";
+    buttonDelete.classList.add("Delete");
+    buttonDelete.addEventListener("click", () => deleteAppointment(i));
+    tr.appendChild(buttonDelete);
+
+    showAppointments.appendChild(tr);
+}
+}
+}
+
+
+function editAppointment(index) {
+let appointment = appointments[index];
+let newName = prompt("Enter new name: ", appointment["name"]);
+let newEmail = prompt("Enter new email: ", appointment["email"]);
+let newNumber = prompt("Enter new number: ", appointment["number"]);
+let newBirth = prompt("Enter new birth: ", appointment["birth"]);
+let newPlace = prompt("Enter new place: ", appointment["place"]);
+let newDoctor = prompt("Enter new doctor: ", appointment["doctor"]);
+let newImage = prompt("Enter new image: ", appointment["image"]);
+
+if (newName && newEmail && newNumber && newBirth && newPlace && newDoctor && newImage) {
+appointment["name"] = newName;
+appointment["email"] = newEmail;
+appointment["number"] = newNumber;
+appointment["birth"] = newBirth;
+appointment["place"] = newPlace;
+appointment["doctor"] = newDoctor;
+appointment["image"] = newImage;
+localStorage.setItem("appointments", JSON.stringify(appointments));
+displayappointment();
+}
+}
+
+
+function deleteAppointment(index) {
+let appointment = appointments[index];
+appointment["isDelete"] = true;
+// appointments.splice(index, 1);
+localStorage.setItem("appointments", JSON.stringify(appointments));
+displayappointment();
+}
+
+displayappointment();
+
+
+let btnPM = document.getElementById("btnPM");
+btnPM.onclick = function(){ 
+    window.location.href="blog_main_admin.html";
+}
+
+    </script>
+</body>
+</html>

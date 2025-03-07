@@ -1,0 +1,102 @@
+//TEST ĐẦY ĐỦ CÓ NÚT NHẤN CẢNH BÁO
+
+#include <Wire.h>
+#include "MAX30100_PulseOximeter.h"
+#include <WiFi.h>
+#include <FirebaseESP32.h>
+#include <Ticker.h>  // Thư viện để tạo timer interrupt
+
+#define WIFI_SSID "4G REMa_2.4G"
+#define WIFI_PASSWORD "1high34namw6789"
+#define FIREBASE_HOST "https://heart-beat-1-default-rtdb.firebaseio.com/"
+#define FIREBASE_AUTH "Q7SSHX1TBXs2iRiOLE6Ik9u08mpqVbyj9L0uA2ZQ"
+FirebaseData fbdb;
+
+PulseOximeter pox;
+
+int button = 19;
+int led = 2;
+bool ledState = LOW;
+
+// Định nghĩa timer interrupt (tick mỗi giây)
+Ticker timer;
+
+void setup() {
+  
+  Serial.begin(9600);
+
+  // Kết nối WiFi
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);  // Thay vì dùng delay, sử dụng millis() để kiểm soát thời gian kết nối
+  }
+  Serial.println("Connected!");
+
+  // Kết nối Firebase
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
+  Firebase.setReadTimeout(fbdb, 1000 * 6);
+  Firebase.setwriteSizeLimit(fbdb, "tiny");
+
+  pinMode(button, INPUT);  // Cài đặt chân D19 ở trạng thái đọc dữ liệu
+  pinMode(led, OUTPUT);    // Cài đặt chân D2 dưới dạng OUTPUT
+
+  // Khởi tạo cảm biến
+  if (!pox.begin()) {
+    Serial.println("FAILED to initialize MAX30100");
+    while (true); // Vòng lặp vô hạn nếu không khởi tạo được cảm biến
+  }
+
+  // Đặt timer để gọi hàm "sendDataToFirebase" mỗi 1 giây
+  timer.attach(1, sendDataToFirebase); // Gọi hàm "sendDataToFirebase" mỗi 1 giây (1s)
+}
+
+void loop() {
+  // ====================SENSOR=============================
+  pox.update();  // Cập nhật cảm biến mà không dùng delay()
+
+  // ====================LED=============================
+//   int buttonStatus = digitalRead(button);  // Đọc trạng thái button
+//   if (buttonStatus == HIGH) {
+//     ledState = !ledState;
+//     digitalWrite(led, ledState);
+//     delay(200);
+//     Firebase.setInt(fbdb, "/room1/Led", ledState);  // Cập nhật Firebase với trạng thái LED
+//   }
+
+//   if (Firebase.getInt(fbdb, "/room1/Led") == true) {
+//     int data = fbdb.intData();
+//     if (data == 1) {
+//       digitalWrite(led, HIGH);  // Bật LED từ Firebase
+//     } else {
+//       digitalWrite(led, LOW);   // Tắt LED từ Firebase
+//     }
+//   }
+}
+
+void sendDataToFirebase() {
+  // Lấy dữ liệu từ cảm biến
+  int heartRate = pox.getHeartRate();
+  int spo2 = pox.getSpO2();
+
+  // Kiểm tra dữ liệu hợp lệ trước khi gửi
+  if (heartRate > 0.0 && spo2 > 0.0) {
+    // In ra dữ liệu nhịp tim và SpO2
+    Serial.printf("Heart rate: %.1d bpm / SpO2: %.1d %%\n", heartRate, spo2);
+
+
+    // Tạo đối tượng FirebaseJson và gán giá trị cho HeartBeat và Spo2
+    FirebaseJson data;
+    data.set("/HeartBeat", heartRate); // Cập nhật giá trị cho HeartBeat
+    data.set("/Spo2", spo2);           // Cập nhật giá trị cho Spo2
+
+    // Gửi cả hai giá trị đồng thời lên Firebase
+    if (Firebase.updateNode(fbdb, "/room1", data)) {
+      Serial.println("Dữ liệu đã được cập nhật lên Firebase!");
+    } else {
+      Serial.println("Cập nhật dữ liệu thất bại!");
+    }
+  }
+}

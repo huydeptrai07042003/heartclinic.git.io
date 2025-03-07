@@ -1,0 +1,90 @@
+:root{
+    --text-color:rgb(28,88,239);
+    --clr-bg-1: #F0F0F0;
+}
+
+*{
+    margin: 0 !important;
+    border: 0 !important;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    background-image: url(img/bg-blog.jpg);
+}
+
+.title_name{
+    color: var(--text-color);
+    background-image: linear-gradient(to right,rgba(181, 120, 55,  0.5),rgba(255,227,112,0.5)56.7352%,rgba(181, 120, 55,0.5));
+    backdrop-filter: blur(10px);
+}
+
+.btn2{
+    background-color: var(--text-color);
+    padding: 0 35px;
+    border-radius: 30px;
+    height: 50px;
+    align-content: center;
+    color: white !important;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.btn2:hover{
+    background-color: black;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+.blog-container{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:30px;
+
+}
+.post{
+    padding: 30px;
+    background-color: var(--text-color);
+    border-radius: 10px;
+    position: relative;
+}
+
+.fa-star{
+    background-image: linear-gradient(to right,rgba(181, 120, 55),rgba(255,227,112)56.7352%,rgba(181, 120, 55));
+    background-clip: text;
+    color: transparent;
+}
+.post> h3 > span, .post> p > span{
+    color: lemonchiffon;
+}
+
+.post-dropdown{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right,rgba(181, 120, 55,0.3),rgba(255,227,112,0.3)56.7352%,rgba(181, 120, 55,0.3));
+    opacity: 0;
+    border-radius: 10px;
+    transition: all 0.5s ease;
+}
+.post:hover .post-dropdown{
+    opacity: 1;
+}
+
+.homebtn{
+    text-decoration: none;
+    background-color: var(--text-color);
+    color: white;
+    transition: all 0.5s ease;
+}
+
+.homebtn:hover{
+    background-color: black;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
